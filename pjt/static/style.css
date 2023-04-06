@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;700&display=swap');
+*{
+  list-style:none;
+  text-decoration:none;
+  box-sizing:border-box;
+  font-family: 'Poppins', sans-serif; 
+}
+a{
+  padding:10px;
+  color:white;
+}
+a:link {
+  text-decoration:none;
+}
+a:visited {
+  text-decoration: none;
+}
+.Header{
+  height:65px;
+  width:100%;
+  top:0;
+  right:0;
+  z-index:1000;
+  display:flex;
+  padding: 16px;
+  align-items:center;
+  justify-content:space-between;
+  background-color:#24292f;
+}
+#logo-title{
+  color:white;
+  font-size:20px;
+  font-weight:700;
+  margin-left:3px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+}
+.logo i{
+  color:white;
+  font-size:28px;
+  margin-right:3px;
+}
+.navbar{
+  padding-top:20px;
+}
+button{
+  margin:0;
+  padding: 0.5rem 0.4rem;
+  display:inline-block;
+  width:auto;
+  border:none;
+}
+.button1{
+  color:white;
+  background-color:transparent;
+  padding-top:10px;
+  margin-right:3px;
+  text-align:center;
+}
+.button1:hover{
+  opacity:0.5;
+}
+.button2{
+  background-color:transparent;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+.button2:hover{
+  opacity:0.5;
+}
+.sidebar{
+  position:fixed;
+  left:0;
+  width:250px;
+  height:100%;
+  padding-top:12px;
+}
+.sidebar i{
+  color:black;
+}
+.sidebar ul a{
+  display:block;
+  height:100%;
+  width:100%;
+  font-size:18px;
+  font-weight:300;
+  padding-left:10px;
+}
+.sidebar ul span{
+  padding-left:20px;
+  color:black;
+}
+.sidebar li:hover{
+  border-radius: 8px;
+  background-color:#ECECEC;
+}

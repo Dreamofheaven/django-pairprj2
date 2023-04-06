@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %}</title>
+    <style>{% block style %}{% endblock style %}</style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+      *{
+        list-style:none;
+        text-decoration:none;
+        box-sizing:border-box;
+        font-family: 'Noto Sans KR', sans-serif;
+      }
+      a:link {
+        text-decoration:none;
+      }
+      a:visited {
+        text-decoration: none;
+      }
+      .sidebar{
+        position:fixed;
+        left:0;
+        width:300px;
+        height:100%;
+        background-color:#363537;
+      }
+      .sidebar header{
+        font-size:22px;
+        text-align:center;
+      }
+      .sidebar ul a{
+        display:block;
+        height:100%;
+        width:100%;
+        font-size:20px;
+        padding-left:40px;
+        box-sizing:border-box;
+        border-top: 1px solid rgba(255,255,255,.1);
+        border-bottom: 1px solid black;
+      }
+      .sidebar ul span{
+        color:white;
+        padding-left:30px;
+      }
+      .logo{
+        text-align:center;
+        display:flex;
+      }
+      .logo span{
+        font-weight:bold;
+        color:#363537;
+        font-size:25px; 
+        margin-left:10px;
+      }
+      a{
+        padding:10px;
+      }
+      .sidebar header{
+        text-align:center;
+        margin:30px;
+        color:white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      {% comment %} 네비게이션바 {% endcomment %}
+      <nav class="navbar">
+        <a href="#" class="logo">
+          {% load static %}
+          <img src="{% static 'code.png' %}" alt="logo" style="width:4%">
+          <span class="nav-item">개발자 정보 공유</span>
+        </a>
+        <div class="d-flex">
+          {% if request.user.is_authenticated %}
+          <h5> {{ user }} 님 안녕하세요</h5>
+          <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="로그아웃">
+          </form>
+          {% else %}
+          <a type="button" class="btn btn-outline-primary m-3 " href="{% url 'accounts:login' %}">로그인</a>
+          <a type="button" class="btn btn-outline-info m-3 " href="{% url 'accounts:signup' %}">회원 가입</a>
+          {% endif %}
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-3">
+          <div class="sidebar">
+            <header>IT 정보 공유</header>
+            <ul>
+              {% if request.user.is_authenticated %}
+              <li>
+                <a href="{% url 'posts:create' %}">
+                  <span>글 작성</span>
+                </a>
+              </li>
+              {% endif %}
+              <li>
+                <a href="{% url 'posts:index' %}">
+                  <span>모든글</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'posts:view_category' '개발' %}">
+                  <span>개발</span>
+                </a> 
+              </li>
+              <li>
+                <a href="{% url 'posts:view_category' '디자인' %}">
+                  <span>디자인</span>
+                </a> 
+              </li>
+              <li>
+                <a href="{% url 'posts:view_category' '기획'%}">
+                  <span>기획</span>
+                </a> 
+              </li>
+            </ul>
+          </div>
+        </div>
+        <main class="col-9">
+        {% block main %}
+        {% endblock main %}
+        </main>
+      </div>
+    <div>
+    {% block body %}{% endblock body %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+  </body>
+</html>

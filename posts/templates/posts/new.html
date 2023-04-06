@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block title %}new{% endblock title %}
+{% block main %}
+  <h1>글작성</h1>
+  <form action="{% url 'posts:create' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+  </form>
+{% endblock main %}

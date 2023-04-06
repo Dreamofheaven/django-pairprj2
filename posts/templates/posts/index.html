@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}index{% endblock title %}
+{% block main %}
+  <h1>index</h1>
+  {% for post in posts %}
+    <a href="{% url 'posts:read' post.pk %}"> 글 번호 - {{ post.pk }} / 카테고리 - {{ post.category}} </a>
+    <br>
+  {% endfor %} 
+{% endblock main %}

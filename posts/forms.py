@@ -2,8 +2,8 @@ from django import forms
 from .models import Post
 POSITION_CHOICES=[
         ('개발', '개발'),
-        ('기획', '기획'),
-        ('디자인', '디자인'),
+        ('디자인','디자인'),
+        ('기획','기획'),
 ]
 class PostForm(forms.ModelForm):
     title = forms.CharField(

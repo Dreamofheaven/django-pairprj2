@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h1>회원정보 수정/탈퇴</h1>
+
+<form action="{% url 'accounts:user_detail' user.pk %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" class="btn btn-outline-warning m-3" value="회원정보수정">
+</form> 
+
+{% endblock main %}

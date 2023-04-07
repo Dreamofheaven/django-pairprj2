@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Post
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
 def init(request):
     return redirect('posts:index')
@@ -11,6 +12,7 @@ def index(request):
     posts = Post.objects.all()
     context = {
         'posts':posts,
+        'get_user_model': get_user_model,
     }
     return render(request,'posts/index.html',context)
 
@@ -65,10 +67,17 @@ def update(request, post_pk):
 
 @login_required
 def view_category(request, subject):
-    print(subject)
-    posts = Post.objects.filter(category=subject)
+    category_dict = {
+        'develop': '개발',
+        'design':'디자인',
+        'plan':'기획',
+    }
+    print(category_dict[subject])
+    posts = Post.objects.filter(category=category_dict[subject])
     print(posts)
     context = {
         'posts': posts,
+        'subject':subject,
     }
     return render(request, 'posts/view_category.html', context)
+

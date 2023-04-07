@@ -1,15 +1,47 @@
 {% extends 'base.html' %}
-
+{% block style %}
+.detail{
+  width:80%;
+  padding-right:30px;
+}
+.table-content{
+  line-height:300px;
+}
+.detail h1{
+  margin-top:2rem;
+}
+{% endblock style %}
 {% block main %}
-  <p>글 번호: {{ post.pk }}</p>
-  <p>제목: {{ post.title }}</p>
-  <p>내용: {{ post.content }}</p>
-  <p>카테고리: {{ post.category }}</p>
-
-  <form action="{% url 'posts:delete' post.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="삭제">
-  </form>
-  <a href="{% url 'posts:update' post.pk %}">[수정]</a>
-  <a href="{% url 'posts:index' %}">[뒤로가기]</a> 
+  <div class="detail">
+    <h1>상세내용</h1>
+    <table class="table table-bordered my-5">
+      <tbody>
+        <tr>
+          <th scope="col" class="table-info text-center">닉네임</th>
+          <td>{{ post.author }}</td>
+          <th scope="col" class="table-info text-center">분류</th>
+          <td> {{ post.category }}</th>
+          <th scope="col" class="table-info text-center">등록일시</th>
+          <td> {{ post.created_at }} </td>
+        </tr>
+        <tr>
+          <th scope="col" class="table-info text-center">제목</th>
+          <td colspan="3">{{ post.title }}</td>
+          <th scope="col" class="table-info text-center">글번호</th>
+          <td> {{ post.pk }}</th>
+        </tr>
+        <tr class="table-content">
+          <th scope="col" class="table-info text-center">내용</th>
+          <td colspan="6">{{ post.content }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<form action="{% url 'posts:delete' post.pk%}" method="POST">
+  {% csrf_token %}
+  <p> 수정일자: {{ post.updated_at }} </p>
+  <input type="submit" value="삭제" class="btn btn-outline-danger m-3">
+  <a href="{% url 'posts:update' post.pk %}" class="btn btn-outline-warning m-3">수정</a>
+  <a href="{% url 'posts:index' %}" class="btn btn-outline-dark m-3">뒤로가기</a> 
+</form>
 {% endblock main %}

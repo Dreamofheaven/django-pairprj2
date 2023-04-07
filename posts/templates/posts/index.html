@@ -1,9 +1,48 @@
 {% extends 'base.html' %}
+{% block user %} {{ user }} {% endblock user %}
 {% block title %}index{% endblock title %}
+{% block style %}
+.index a{
+  color:black;
+}
+.index{
+  width:80%;
+}
+tr:hover{
+  background-color:#ECECEC;
+}
+.index h1{
+  text-transform:uppercase;
+}
+{% endblock style %}
 {% block main %}
-  <h1>index</h1>
-  {% for post in posts %}
-    <a href="{% url 'posts:read' post.pk %}"> 글 번호 - {{ post.pk }} / 카테고리 - {{ post.category}} </a>
-    <br>
-  {% endfor %} 
+  <div class="index my-3">
+    <h1>index</h1>
+    <table class="table my-5">
+      <thead>
+        <tr class="table-success">
+          <th scope="col">#</th>
+          <th scope="col">글제목</th>
+          <th scope="col">카테고리</th>
+          <th scope="col">생성일자</th>
+        </tr>
+      </thead>
+      {% for post in posts %}
+      <tbody>
+        <tr onclick="window.location='{% url 'posts:read' post.pk %}'" style="cursor:pointer;">
+          <th scope="row">{{ post.pk }}</th>
+          <td>{{ post.title }}</td>
+          <td>{{ post.category }}</td>
+          <td>{{ post.created_at|date:'m-d / H:i'}}</th>
+        </tr>
+      </tbody>
+      {% endfor %}
+
+    </table>
+  </div>
+    
+    {% comment %} {% for post in posts %}
+      <a href="{% url 'posts:read' post.pk %}"> 글 번호 - {{ post.pk }} / 카테고리 - {{ post.category}} </a>
+      <br>
+    {% endfor %}  {% endcomment %}
 {% endblock main %}

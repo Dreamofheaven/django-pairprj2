@@ -1,9 +1,16 @@
 {% extends 'base.html' %}{% block title %}new{% endblock title %}
+{% block style %}
+.new{
+  width:80%;
+}
+{% endblock style %}
 {% block main %}
-  <h1>글작성</h1>
-  <form action="{% url 'posts:create' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
-  </form>
+  <div class="new">
+    <h1>글작성</h1>
+    <form action="{% url 'posts:create' %}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit">
+    </form>
+  </div>
 {% endblock main %}

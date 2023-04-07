@@ -45,12 +45,21 @@ a:visited {
 .navbar{
   padding-top:20px;
 }
+.navbar h5{
+  color:white;
+  margin-top:10px;
+  margin-right:8px;
+}
 button{
   margin:0;
   padding: 0.5rem 0.4rem;
   display:inline-block;
   width:auto;
   border:none;
+}
+
+#logout_button:hover{
+  opacity:0.5;
 }
 .button1{
   color:white;
@@ -95,4 +104,6 @@ button{
 .sidebar li:hover{
   border-radius: 8px;
   background-color:#ECECEC;
+  transition-timing-function: ease-in;
 }
+

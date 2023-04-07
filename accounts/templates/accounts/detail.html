@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1>회원정보 조회</h1>
+<p>username: {{ User_detail.username }}</p>
+<p>first_name: {{ User_detail.first_name }}</p>
+<p>last_name: {{ User_detail.last_name }}</p>
+<p>email: {{ User_detail.email }}</p>
+<p>birthday: {{ User_detail.birthday }}</p>
+
+<div class="d-flex">
+  <a href="{% url 'accounts:edit' user.pk %}" class="btn btn-outline-warning m-3">수정</a>
+  <a href="{% url 'posts:index' %}" class="btn btn-outline-dark m-3">뒤로가기</a> 
+</div>
+
+{% endblock main %}

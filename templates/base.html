@@ -14,29 +14,29 @@
   <body>
     {% comment %} 네비게이션바 {% endcomment %}
     <header class="Header">
-      <a href="#" class="logo"><i class="ri-code-s-slash-line"></i><span id="logo-title">Developer Board</span>
+      <a href="{% url 'posts:index' %}" class="logo"><i class="ri-code-s-slash-line"></i><span id="logo-title">Developer Board</span>
       </a>
       <ul class="navbar">
         {% if request.user.is_authenticated %}
-          <li><h5> {{ user }} 님 안녕하세요</h5></li>
+          <li> <a href="{% url 'accounts:detail' user.pk %}"> <h5>{{ user }}님 안녕하세요</h5></a></li>
           <li><form action="{% url 'accounts:logout' %}" method="POST">
             {% csrf_token %}
-            <input type="submit" value="로그아웃">
+            <input type="submit" value="로그아웃" class="btn btn-danger mx-3">
           </form></li>
         {% else %}
-          <li><button class="button1"><a href="{% url 'accounts:login' %}">Sign in</a></button></li>
+          <li><button class="button1"><a href="{% url 'accounts:login' %}">login</a></button></li>
           <li><button class="button2"><a href="{% url 'accounts:signup' %}">Sign up</a></button></li>
         {% endif %}
       </ul>
     </header>
     <div class="row">
       <div class="col-3">
-        <div class="sidebar">
+        <div class="sidebar my-3">
           <ul>
             {% if request.user.is_authenticated %}
             <li>
               <a href="{% url 'posts:create' %}">
-                <span>글 작성</span>
+                <i class="ri-edit-2-line"></i><span>글 작성</span>
               </a>
             </li>
             {% endif %}
@@ -46,24 +46,24 @@
               </a>
             </li>
             <li>
-              <a href="{% url 'posts:view_category' '개발' %}">
+              <a href="{% url 'posts:view_category' 'develop' %}">
                 <i class="ri-macbook-line"></i><span>Develop</span>
               </a> 
             </li>
             <li>
-              <a href="{% url 'posts:view_category' '디자인' %}">
+              <a href="{% url 'posts:view_category' 'design' %}">
                 <i class="ri-palette-line"></i><span>Design</span>
               </a> 
             </li>
             <li>
-              <a href="{% url 'posts:view_category' '기획'%}">
+              <a href="{% url 'posts:view_category' 'plan'%}">
                 <i class="ri-booklet-line"></i><span>Plan</span>
               </a> 
             </li>
           </ul>
         </div>
       </div>
-      <main class="col-9">
+      <main class="col-9 mt-3">
       {% block main %}
       {% endblock main %}
       </main>

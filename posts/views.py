@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, PostCommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 
@@ -38,7 +38,9 @@ def create(request):
     if request.method=='POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save()
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
             return redirect('posts:read',post.pk)
     else:
         form = PostForm()
@@ -81,3 +83,14 @@ def view_category(request, subject):
     }
     return render(request, 'posts/view_category.html', context)
 
+@login_required
+def post_comment_create(request, post_pk):
+    if request.method == "POST":
+        post = Post.objects.get(pk=post_pk)
+        post_comment_form = PostCommentForm()
+        if post_comment_form.is_valid():
+            post_comment = post_comment_form.save(commit=False)
+            post_comment.post = post
+            post_comment.user = request.user
+            post_comment.save()
+        return redirect('posts:read.html', post.pk)

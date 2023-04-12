@@ -1,47 +1,85 @@
 {% extends 'base.html' %}
 {% block style %}
+.main-body{
+}
 .detail{
   width:80%;
-  padding-right:30px;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+}
+.user-button{
+  height:100%;
 }
 .table-content{
   line-height:300px;
 }
+.d-flex.user-button{
+  margin-top:30px;
+}
 .detail h1{
   margin-top:2rem;
 }
+.footer{
+  width:80%;
+  padding-right:30px;
+  display:flex;
+  justify-content:space-between;
+}
+#comment{
+  background-color:transparent;
+  width:100px;
+  border: 1px solid black;
+  border-radius:5px;
+  height:40px;
+}
 {% endblock style %}
 {% block main %}
+<div class="main-body">
   <div class="detail">
     <h1>상세내용</h1>
-    <table class="table table-bordered my-5">
-      <tbody>
-        <tr>
-          <th scope="col" class="table-info text-center">닉네임</th>
-          <td>{{ post.author }}</td>
-          <th scope="col" class="table-info text-center">분류</th>
-          <td> {{ post.category }}</th>
-          <th scope="col" class="table-info text-center">등록일시</th>
-          <td> {{ post.created_at }} </td>
-        </tr>
-        <tr>
-          <th scope="col" class="table-info text-center">제목</th>
-          <td colspan="3">{{ post.title }}</td>
-          <th scope="col" class="table-info text-center">글번호</th>
-          <td> {{ post.pk }}</th>
-        </tr>
-        <tr class="table-content">
-          <th scope="col" class="table-info text-center">내용</th>
-          <td colspan="6">{{ post.content }}</td>
-        </tr>
-      </tbody>
-    </table>
+    {% if post.author == request.user %}
+    <div class="d-flex user-button">
+      <form action="{% url 'posts:delete' post.pk%}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제" class="btn btn-outline-danger m-3">
+      </form>
+      <a href="{% url 'posts:update' post.pk %}" class="btn btn-outline-warning m-3">수정</a>
+    {% endif %}
+    </div>
   </div>
-<form action="{% url 'posts:delete' post.pk%}" method="POST">
-  {% csrf_token %}
-  <p> 수정일자: {{ post.updated_at }} </p>
-  <input type="submit" value="삭제" class="btn btn-outline-danger m-3">
-  <a href="{% url 'posts:update' post.pk %}" class="btn btn-outline-warning m-3">수정</a>
-  <a href="{% url 'posts:index' %}" class="btn btn-outline-dark m-3">뒤로가기</a> 
-</form>
+  <table class="table table-bordered my-2" style="width:80%">
+    <tbody>
+      <tr>
+        <th scope="col" class="table-info text-center">닉네임</th>
+        <td>{{ post.author }}</td>
+        <th scope="col" class="table-info text-center">분류</th>
+        <td> {{ post.category }}</th>
+        <th scope="col" class="table-info text-center">등록일시</th>
+        <td> {{ post.created_at }} </td>
+      </tr>
+      <tr>
+        <th scope="col" class="table-info text-center">제목</th>
+        <td colspan="3">{{ post.title }}</td>
+        <th scope="col" class="table-info text-center">글번호</th>
+        <td> {{ post.pk }}</th>
+      </tr>
+      <tr class="table-content">
+        <th scope="col" class="table-info text-center">내용</th>
+        <td colspan="6">{{ post.content }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="mt-3"> 수정일자: {{ post.updated_at }} </p>
+
+  <hr style="width:80%">
+  <div class="footer mt-3">
+    <a href="{% url 'posts:index' %}" class="btn btn-outline-dark m-3">뒤로가기</a>
+    <form action="{% url 'posts:post_comment_create' post.pk %}" method="post">
+      {% csrf_token %}
+      {{ post_comment_form.as_p }}
+      <input type="submit" value="댓글 작성" id="comment" class="mt-3">
+    </form>
+  </div>
+</div>
 {% endblock main %}

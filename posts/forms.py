@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post,Post_Comment
 POSITION_CHOICES=[
         ('개발', '개발'),
         ('디자인','디자인'),
@@ -30,4 +30,9 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ('title','content','category',)
+
+class PostCommentForm(forms.ModelForm):
+    class Meta:
+        model = Post_Comment
+        fields = ('content',)

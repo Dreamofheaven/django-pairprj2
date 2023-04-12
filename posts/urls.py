@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:post_pk>/update/', views.update, name='update'),
     path('<int:post_pk>/delete/', views.delete, name='delete'),
     path('category/<str:subject>/', views.view_category, name='view_category'),
+    path('<int:post_pk>/comments/',views.post_comment_create,name='post_comment_create'),
 ]

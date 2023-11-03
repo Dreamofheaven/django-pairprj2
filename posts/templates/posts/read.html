@@ -77,7 +77,8 @@
     <a href="{% url 'posts:index' %}" class="btn btn-outline-dark m-3">뒤로가기</a>
     <form action="{% url 'posts:post_comment_create' post.pk %}" method="post">
       {% csrf_token %}
-      {{ post_comment_form.as_p }}
+      {% comment %} {{ post_comment_form.as_p }} {% endcomment %}
+      {{ post_comment_form }}
       <input type="submit" value="댓글 작성" id="comment" class="mt-3">
     </form>
   </div>

@@ -83,14 +83,19 @@ def view_category(request, subject):
     }
     return render(request, 'posts/view_category.html', context)
 
+
 @login_required
 def post_comment_create(request, post_pk):
-    if request.method == "POST":
-        post = Post.objects.get(pk=post_pk)
-        post_comment_form = PostCommentForm()
-        if post_comment_form.is_valid():
-            post_comment = post_comment_form.save(commit=False)
-            post_comment.post = post
-            post_comment.user = request.user
-            post_comment.save()
-        return redirect('posts:read.html', post.pk)
+    post = Post.objects.get(pk=post_pk)
+    post_comment_form = PostCommentForm(request.POST)
+    if post_comment_form.is_valid():
+        comment = post_comment_form.save(commit=False)
+        comment.post = post
+        comment.user = request.user
+        comment.save()
+        return redirect('posts:read', post.pk)
+    context = {
+        'post': post,
+        'post_comment_form': post_comment_form,
+    }
+    return render(request, 'posts/read.html', context)

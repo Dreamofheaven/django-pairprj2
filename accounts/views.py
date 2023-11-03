@@ -21,6 +21,7 @@ def login(request):
     }
     return render(request, 'accounts/login.html', context)
 
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('posts:index')
@@ -39,19 +40,18 @@ def signup(request):
     return render(request, 'accounts/signup.html', context)
 
 #회원조회
+@login_required
 def detail(request, pk):
     User_detail = User.objects.get(pk=pk)
-    #User2 = get_user_model()
-    #print(User2.objects.all())
-    #user = get_object_or_404(User2, pk=pk)
-    #print(user)
     context = {
         'User_detail':User_detail,
     }
     return render(request,'accounts/detail.html',context)
 
 #정보수정
-def edit(request, user):
+# def edit(request, user):
+@login_required
+def edit(request):
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -61,7 +61,7 @@ def edit(request, user):
         form = CustomUserChangeForm(instance=request.user)
     context = {
         'form' : form,
-        'user': user,
+        # 'user': user,
     }
     return render(request,'accounts/update.html', context)
 
